@@ -1,17 +1,25 @@
-const dotenv = require('dotenv');
 const socket = require('socket.io')
-const app = require('./app');
+const express = require('express');
+const cors = require('cors');
 
-// get access to config.env file
-dotenv.config({ path: './config.env' });
+const app = express();
 
-const port = process.env.PORT || 8000;
+app.use(express.json());
+
+const port = 8000;
 const server = app.listen(port, () => {
     console.log(`App running on port ${port}...`);
 });
 
 // setup socket connection
-io = socket(server)
+io = socket(server, {
+    cors:{
+        origin: 'http://localhost:3000',
+        methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Credentials'],
+        withCredentials: true
+    }
+})
 io.on('connection', (socket) => {
     console.log(socket.id)
     /*
