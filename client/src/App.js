@@ -47,6 +47,7 @@ function App() {
   }
   return(
     <div className='App'>
+      <h1 className='hedding'>Live Box {loggedIn ? '- ' + room : ''}</h1>
       {!loggedIn ? 
 
         <div className="logIn">
@@ -83,6 +84,8 @@ function App() {
           </div>
         </div>
       )}
+
+      <h3 className='footer'>Developed by Gangothri Darsi</h3>
     </div>
   )
 }
