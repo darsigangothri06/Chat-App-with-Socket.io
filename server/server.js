@@ -37,6 +37,24 @@ io.on('connection', (socket) => {
         console.log('User Joined Room: ' + data)
     })
 
+    // add messages into the room
+    socket.on('send_message', (data) => {
+        /*
+            Here, we are going to have two events
+            1. send_message
+                -> The person sending message will emit send_message
+            2. receive_message
+                -> In the backend, we analyze the data that is being send
+                -> We send it to the specific room
+                -> emit/receive message
+                -> So, everyone on this room will receive this event
+        */
+        // the data contains the room,author,message
+        const {room, content} = data
+        // send a message to a specific toom
+        socket.to(room).emit('receive_message', content)
+    })
+
     // disconnect a user
     socket.on('disconnect', () => {
         console.log('User Disconnected')
