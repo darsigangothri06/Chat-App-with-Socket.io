@@ -12,16 +12,24 @@ const server = app.listen(port, () => {
 });
 
 // setup socket connection
-io = socket(server, {
-    cors:{
-        origin: 'http://localhost:3000',
-        methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Credentials'],
-        withCredentials: true
-    }
-})
+// io = socket(server, {
+//     cors:{
+//         origin: 'http://localhost:3000',
+//         methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
+//         allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Credentials'],
+//         withCredentials: true
+//     }
+// })
+// io = socket.Server(server)
+const io = new socket.Server(server, {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"],
+    },
+});
+
 io.on('connection', (socket) => {
-    console.log(socket.id)
+    console.log('User id is:',socket.id)
     /*
         Here, we can start Sockets
         -> We can constantly share the data between the client and the server like,
